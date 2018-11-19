@@ -1,6 +1,7 @@
 
 #include <Servo.h>
 #include <PPMReader.h>
+#include <Wire.h>
 
 int incomingByte = 0;
 Servo esc;  // Control the speed
@@ -25,6 +26,13 @@ void setup() {
   esc.writeMicroseconds(1500);
   volant.attach(6);
   volant.writeMicroseconds(1500);
+  Wire.begin(8); 
+  Wire.onRequest(I2cRequestEvent);
+}
+
+void I2cRequestEvent() {
+  Wire.write("hello ");
+  // as expected by master
 }
 
 unsigned long ReversMoteur(unsigned long valeur )
